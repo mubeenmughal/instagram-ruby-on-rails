@@ -1,0 +1,19 @@
+  <nav class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container">
+          <a class="navbar-brand" href=""> <i class="fa fa-instagram" aria-hidden="true"></i> | Instagram</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                    <form class="d-flex search" action="/users/search">
+                      <div class="easy-autocomplete" style="width: 259px;"><input id="query" name="username" type="search" placeholder="Search" aria-label="Search" data-behavior="auto-complete" autocomplete="off"><div class="easy-autocomplete-container" id="eac-container-query"><ul></ul></div></div>
+                    </form>
+                       <li class="nav-item active"> <a class="nav_link  btn btn-white" href="/posts"> Home </a> </li>
+                        <li class="nav-item"> <a class="nav_link   btn btn-white" href="/posts/new"> New Post </a> </li>
+                        <li class="nav-item"> <a class="nav_link   btn btn-white" href="/user_stories"> Stories </a> </li>
+                        <li class="nav-item"> <a class="nav_link  btn btn-white" href="/profile/:name/"> Profile </a> </li>
+                        <li class="nav-item"> <a class="nav_link   btn btn-white" rel="nofollow" data-method="delete" href="/users/sign_out"> Sign Out </a> </li>
+
+                </ul>
+              </div>
+            </div>
+</nav>

@@ -5,11 +5,8 @@ class Post < ApplicationRecord
   has_many_attached :images
   validates :description,length: { maximum: 1000,
                                                     too_long: '%{count} characters is the maximum allowed' }
-  has_many :comments
-  has_many :likes
+  has_many :comments, dependent: :destroy
+  has_many :likes , dependent: :destroy
   belongs_to :user
 
-  def total_likes
-    0
-  end
 end

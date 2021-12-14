@@ -1,0 +1,81 @@
+<%# <%= javascript_include_tag "post" %> %>
+
+<div class="container">
+    <div class="row">
+      <div class="col-8">
+        <% @posts.each do |post|%>
+          <% post.images.each do |image|%>
+            <div class="insta-post">
+              <div class= "post-meta">
+              <% if post.user.avatar.attached?%>
+                <%= image_tag post.user.avatar, class: 'profile-stats' %>
+              <% end %>
+                <%= link_to post.user.name, profile_path(post.user.name),class: "text-dark" %>
+              </div>
+              <%= image_tag image, class: "img img-fluid" %>
+
+              <div class="post-details">
+                <div class="post-actions">
+                  <i style="cursor: pointer;" id="post-like" class="fa fa-heart  like-<%= post.id %> <%= 'active' if post_liked_by_user?(post.id) %>fa-2x text-muted post-like" data-id="<%=post.id%>"></i>
+                  <i class="fa fa-comment fa-2x text-muted post-comment"></i>
+                </div>
+                <p><strong id="post-<%= post.id%>-likes"><%= post.total_likes_count %> Likes</strong></p>
+                <p><strong id="post-<%= post.id%>-comments"><%= link_to post.user.name, profile_path(post.user.name),class: "text-dark"%></strong></p>
+
+                <%= simple_format post.description %>
+                <p class="text-muted"><%= time_ago_in_words post.created_at%> ago</p>
+              </div>
+
+
+              <% post.comments.each do |comment|%>
+                <strong><%= comment.user.name%></strong>
+                <%= comment.description%> <br>
+              <%end%>
+
+              <div class="comment-box">
+                  <%= form_for @comments do |f| %>
+                    <%= f.hidden_field :post_id, value: post.id %>
+                    <%= f.text_field :description, placeholder: "Add comment here.." %>
+                    <%= f.submit "Add", class: "btn btn-secondary" %>
+                  <%end%>
+              </div>
+
+            </div>
+          <% end %>
+        <%end%>
+      </div>
+
+      <div class="col-4">
+        <div class="user-summary ">
+          <p>
+            <%# <%= link_to image_tag(current_user.avatar), profile_path(current_user.name,class: "profile-stats") if current_user.avatar.present? %> %>
+            <strong><%= current_user.name %>
+          </p>
+        </div>
+          <div class="follower-suggestions">
+            <%= link_to "View All",class: "float-right text-dark"%>
+            <p class="text-muted"><strong>Suggestions for you</strong></p>
+            <%=render "posts/follower_suggestions" %>
+          </div>
+      </div>
+
+    </div>
+  </div>
+
+
+<script>
+
+ $(".post-like").on("click",function(){
+    // alert("hello")
+    var post_id =$(this).data("id");
+    $.ajax({
+      url: "/post/like/"+post_id,
+      method: "get"
+
+    }).done(function(response){
+      console.log(response);
+    })
+ });
+
+
+</script>
