@@ -9,6 +9,8 @@ Rails.application.routes.draw do
   get "profile/:name" => "user#profile" , as: :profile
   get "post/like/:post_id" => "likes#save_like" , as: :like
   get "/dashboard" => "user#index"
+
+  post "follow/user" => "posts#follow_user", as: :follow_account
   #get 'user/index'
   root 'home#index'
 

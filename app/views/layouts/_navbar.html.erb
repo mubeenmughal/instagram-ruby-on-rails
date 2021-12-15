@@ -7,11 +7,18 @@
                     <form class="d-flex search" action="/users/search">
                       <div class="easy-autocomplete" style="width: 259px;"><input id="query" name="username" type="search" placeholder="Search" aria-label="Search" data-behavior="auto-complete" autocomplete="off"><div class="easy-autocomplete-container" id="eac-container-query"><ul></ul></div></div>
                     </form>
+                    <% if current_user %>
                        <li class="nav-item active"> <a class="nav_link  btn btn-white" href="/posts"> Home </a> </li>
                         <li class="nav-item"> <a class="nav_link   btn btn-white" href="/posts/new"> New Post </a> </li>
                         <li class="nav-item"> <a class="nav_link   btn btn-white" href="/user_stories"> Stories </a> </li>
                         <li class="nav-item"> <a class="nav_link  btn btn-white" href="/profile/:name/"> Profile </a> </li>
-                        <li class="nav-item"> <a class="nav_link   btn btn-white" rel="nofollow" data-method="delete" href="/users/sign_out"> Sign Out </a> </li>
+                        <li class="nav-item"> <a class="nav_link   btn btn-white" rel="nofollow" data-method="get" href="/users/sign_out"> Sign Out </a> </li>
+                    <% else %>
+                        <%= link_to 'Sign in',new_user_session_path, class: "nav_link btn btn-white" %>
+                        <%= link_to 'Sign up',new_user_registration_path, class: "nav_link btn btn-white" %>
+                    <%end%>
+
+
 
                 </ul>
               </div>

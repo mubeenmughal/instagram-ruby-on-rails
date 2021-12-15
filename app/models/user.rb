@@ -22,10 +22,10 @@ class User < ApplicationRecord
   enum account_type: { public_account: 0, private_account: 1 }
 
   def total_followers
-    0
+    Follow.where(follower_id: self.id)
   end
 
   def total_following
-    0
+    Follow.where(followed_id: self.id)
   end
 end

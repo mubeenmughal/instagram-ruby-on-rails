@@ -2,17 +2,23 @@
   <div class="row">
     <div class="col-4">
 
-      <%= image_tag current_user.avatar, width: "100px" ,class: "img-rounded" %>
+      <%= image_tag current_user.avatar, width: "100px" ,class: "p-stats" %>
       <%= current_user.name %>
 
     </div>
     <div class="col-8 text-left">
       <h1><%= current_user.name %></h1>
       <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-secondary" %>
-      <div class="profile-stats"><%= current_user.posts.count%> Posts</div>
-      <div class="profile-stats"><%= current_user.total_followers%> followers</div>
-      <div class="profile-stats"><%= current_user.total_following%> following</div>
+
+      <div class="row profile-stats">
+        <div class="col-4">
+          <%= current_user.posts.count%> Posts
+        </div>
+        <div class="col-4"><%= current_user.total_following.count%> followers</div>
+        <div class="col-4"><%= current_user.total_followers.count%> following</div>
+      </div>
     </div>
+
     <div class="row">
           <% current_user.posts.each do |p|%>
 

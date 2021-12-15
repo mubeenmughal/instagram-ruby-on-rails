@@ -1,4 +1,5 @@
 class CommentsController < ApplicationController
+  skip_before_action :verify_authenticity_token
 
   def index
     @comments =Comment.all
@@ -28,6 +29,9 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @comment = Comment.find(params[:id])
+    @comment.destroy
+    redirect_to posts_path, :notice => "your comment has been deleted"
   end
 
   private

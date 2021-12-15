@@ -4,9 +4,4 @@
 
 <h1>welcome You are login now</h1>
 
-<% if current_user %>
-  <%= link_to 'Sign Out',destroy_user_session_path, method: :delete %>
-<% else %>
-<%= link_to 'Sign in',new_user_session_path, class: "btn btn-success" %>
-<%= link_to 'Sign up',new_user_registration_path, class: "btn btn-secondary" %>
-<% end %>
+
