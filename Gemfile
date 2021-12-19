@@ -10,6 +10,7 @@ gem 'bootstrap_form', '~> 4.0'
 gem 'bootstrap-sass', '3.3.6'
 gem "font-awesome-rails"
 
+
 gem 'jquery-rails'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -24,6 +25,8 @@ gem 'sass-rails', '~> 5.0'
 gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
+
+gem "pundit"
 
 gem 'table_print'
 # Use CoffeeScript for .coffee assets and views

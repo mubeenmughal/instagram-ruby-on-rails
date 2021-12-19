@@ -1,8 +1,18 @@
-<%# <%= javascript_include_tag "post" %> %>
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <%= current_user.story&.description%>
+      <% if current_user.story.present? %>
+        <%= link_to "Delete", story_path(current_user.story.id), confirm: "are you sure", method: :delete, class: "text-dark" %>
+        <%= image_tag current_user.story&.images.first, class: "img img-fluid"%>
+      <% end %>
+    </div>
+  </div>
+</div>
 
 <div class="container">
-    <div class="row">
-      <div class="col-8">
+    <div class="row text-align">
+      <div class="col-8 ">
         <% @posts.each do |post|%>
           <% post.images.each do |image|%>
             <div class="insta-post">
@@ -10,18 +20,22 @@
                 <% if post.user.avatar.attached?%>
                   <%= image_tag post.user.avatar, class: 'dp-stats' %>
                 <% end %>
-                <%= link_to post.user.name, profile_path(post.user.name),class: "text-dark" %>
-                <%= button_to "Delete", post,:confirm => "are you sure", :method => :delete ,remote: true,class: "text-dark" %>
+                <%=post.user.id%>
+                <%= link_to post.user.name, user_path(post.user.id),class: "text-dark" %>
+
+                <%if policy(post).destroy?%>
+                  <%= button_to "Delete", post,:confirm => "are you sure", :method => :delete ,remote: true,class: "text-dark" %>
+                <% end %>
               </div>
               <%= image_tag image, class: "img img-fluid" %>
 
               <div class="post-details">
                 <div class="post-actions">
-                  <i style="cursor: pointer;" class="fa fa-heart  like-<%= post.id %> <%= 'active' if post_liked_by_user?(post.id) %>fa-2x text-muted post-like" data-id="<%=post.id%>"></i>
+                  <i style="cursor: pointer;" class="fa fa-heart  active like-<%= post.id %> <%= 'active' if post_liked_by_user?(post.id) %>fa-2x post-like" data-id="<%=post.id%>"></i>
                   <%# <i class="fa fa-comment fa-2x text-muted post-comment"></i> %>
                 </div>
                 <p><strong id="post-<%= post.id%>-likes"><%= post.total_likes_count %> Likes</strong></p>
-                <p><strong id="post-<%= post.id%>-comments"><%= link_to post.user.name, profile_path(post.user.name),class: "text-dark"%></strong></p>
+                <p><strong id="post-<%= post.id%>-comments"><%= link_to post.user.name, user_path(post.user.name),class: "text-dark"%></strong></p>
 
                 <%= simple_format post.description %>
                 <p class="text-muted"><%= time_ago_in_words post.created_at%> ago</p>
@@ -31,12 +45,14 @@
               <% post.comments.each do |comment|%>
                 <strong><%= comment.user.name%></strong>
                 <%= comment.description%>
-                <%= button_to "Delete", comment,:confirm => "are you sure", :method => :delete ,remote: true,class: "float-right text-dark" %>
+                <% if policy(comment).destroy?%>
+                  <%= link_to "Delete", comment,:confirm => "are you sure", :method => :delete ,remote: true,class: "float-right text-dark" %>
+                <% end %><br>
 
               <%end%>
 
               <div class="comment-box">
-                  <%= form_for @comments do |f| %>
+                  <%= form_for @comments ,remote: :true do |f| %>
                     <%= f.hidden_field :post_id, value: post.id %>
                     <%= f.text_field :description, placeholder: "Add comment here.." %>
                     <%= f.submit "Add", class: "btn btn-secondary" %>
@@ -51,14 +67,14 @@
       <div class="col-4">
         <div class="user-summary ">
           <p>
-            <%# <%= link_to image_tag(current_user.avatar), profile_path(current_user.name,class: "profile-stats") if current_user.avatar.present? %> %>
             <strong><%= current_user.name %>
           </p>
         </div>
+
           <div class="follower-suggestions">
             <%= link_to "View All",class: "float-right text-dark"%>
-            <p class="text-muted"><strong>Suggestions for you</strong></p>
-            <%=render partial: "posts/follower_suggestions" %>
+              <p class="text-muted"><strong>Suggestions for you</strong></p>
+            <%=render partial: "posts/follower_suggestions", locals: { followee: @followee } %>
           </div>
       </div>
 
@@ -66,19 +82,20 @@
   </div>
 
 
-<script>
+<%# <script>
 
+$(function(){
  $(".post-like").on("click",function(){
     // alert("hello")
     var post_id =$(this).data("id");
+
     $.ajax({
       url: "/post/like/"+post_id,
-      method: "get"
-
-    }).done(function(response){
+      method: "Get"
+   }).done(function(response){
       console.log(response);
     })
- });
+ })
+});
 
-
-</script>
+</script> %>

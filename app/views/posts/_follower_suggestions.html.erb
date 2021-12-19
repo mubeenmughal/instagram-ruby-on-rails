@@ -1,22 +1,31 @@
 <% @follower_suggestions.each do |user|%>
   <div class="recommended-follower">
     <div class ="row">
-
         <div class="col-lg-2">
           <%= image_tag(url_for(user.avatar), class: "dp-stats") if user.avatar.attached? %>
         </div>
 
-         <div class="col-lg-10">
-            <%= form_tag follow_account_path, method: :post, class: "float-right" do %>
-              <%= hidden_field_tag :follow_id, user.id%>
-              <%= submit_tag "Follow", class: "btn btn-info btn-sm"%>
-            <% end %>
+        <div class="col-lg-10">
+          <%if @followee %>
+                  <%= form_tag unfollow_account_path(user.id), method: :post,remote: true, class: "disabled" do%>
+                    <%= hidden_field_tag :follow_id, user.id %>
+                    <%= submit_tag "Already Followed", class: "btn btn-secondary btn-sm" %>
+                  <% end %>
+          <%else%>
+                  <%= form_tag follow_account_path, method: :post,remote: true, class: "disabled float-right " do %>
+                    <%= hidden_field_tag :follow_id, user.id%>
+                    <%= submit_tag "Follow", class: "btn btn-info btn-sm"%>
+                  <% end %>
+          <%end%>
 
-
-        <%= link_to user.name, profile_path(user.name),class: "text-dark" %>
-        <p class="text-muted"><%= user.created_at > 10.days.ago ? "New to instagram": "followed by X user"%></p>
-      </div>
+          <%= link_to user.name, user_path(user.name),class: "text-dark" %>
+          <p class="text-muted"><%= user.created_at > 10.days.ago ? "New to instagram": "followed by X user"%></p>
+        </div>
     </div>
   </div>
 <% end %>
 
+<%# <%= form_tag follow_account_path, method: :post,remote: true, class: "float-right" do %>
+              <%# <%= hidden_field_tag :follow_id, user.id%>
+              <%# <%= submit_tag "Follow", class: "btn btn-info btn-sm"%>
+            <%# <% end %>

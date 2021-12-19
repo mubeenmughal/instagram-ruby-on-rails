@@ -19,6 +19,7 @@
  @import "font-awesome";
 
  .insta-post {
+   margin-top: 20px;
   margin-bottom: 15px;
 }
 .post-meta {
@@ -36,16 +37,16 @@
   margin-bottom: 20px;
   i {
     margin-right: 10px;
-    color:#ddd;
+    color:rgb(92, 71, 71);
     cursor: pointer;
   }
 
   i:hover {
-    color: #999;
+    color: rgb(42, 23, 23);
   }
 
-  i:active {
-    color: #555;
+  i.active {
+    color: rgb(42, 23, 23);
   }
 }
 
@@ -89,3 +90,10 @@
   border: 1px solid #ddd;
 
 }
+
+// .content {
+//   width: 200px;
+//   height: 600px;
+//   background-color: rgb(221, 221, 231);
+
+// }

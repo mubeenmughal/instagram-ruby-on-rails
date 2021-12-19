@@ -1,0 +1,20 @@
+<h1> Search User </h1>
+<%if @user.any? %>
+  <%= @user[0].name %>
+  <%= link_to "Show profile", user_path(@user[0].id),class: "text-dark" %>
+
+        <%if @already_followed%>
+
+                  <%= form_tag unfollow_account_path(@user[0].id), method: :post,remote: true, class: "disabled" do%>
+                    <%= hidden_field_tag :follow_id, @user[0].id %>
+                    <%= submit_tag "Already Followed", class: "btn btn-secondary btn-sm" %>
+                  <% end %>
+        <%else%>
+                  <%= form_tag follow_account_path, method: :post,remote: true, class: "disabled float-right " do %>
+                    <%= hidden_field_tag :follow_id, @user[0].id%>
+                    <%= submit_tag "Follow", class: "btn btn-info btn-sm"%>
+                  <% end %>
+        <%end%>
+<%else%>
+  <p>No User Found</p>
+<%end%>
