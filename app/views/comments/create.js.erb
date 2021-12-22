@@ -1,0 +1,2 @@
+$('#<%= "post-div#{@post.id}" %>').append($('<div id=<%= "comment-#{@comment.id}" %> class="comment"><strong><%= @comment.user.name%></strong><%= @comment.description%><% if policy(@comment).destroy? %><%= link_to "Delete", @comment,:confirm => "are you sure", :method => :delete ,remote: true,class: "float-right text-dark" %><% end%><br></div>'));
+$('#comment_description').val("");

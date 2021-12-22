@@ -1,0 +1,48 @@
+<div id = "posts-div" >
+  <%# <% @posts.each do |post|%>
+
+    <% post.images.each do |image|%>
+              <div class="insta-post">
+                <div class= "post-meta">
+                  <% if post.user.avatar.attached?%>
+                    <%= image_tag post.user.avatar, class: 'dp-stats' %>
+                  <% end %>
+                  <%=post.user.id%>
+                  <%= link_to post.user.name, user_path(post.user.id),class: "text-dark" %>
+
+                  <%if policy(post).destroy?%>
+                    <%= button_to "Delete", post,:confirm => "are you sure", :method => :delete ,remote: true,class: "text-dark" %>
+                  <% end %>
+                </div>
+                <%= image_tag image, class: "img img-fluid" %>
+
+                <div class="post-details">
+                  <div class="post-actions">
+                    <i style="cursor: pointer;" class="fa fa-heart  active like-<%= post.id %> <%= 'active' if post_liked_by_user?(post.id) %>fa-2x post-like" data-id="<%=post.id%>"></i>
+                  </div>
+                  <p><strong id="post-<%= post.id%>-likes"><%= post.total_likes_count %> Likes</strong></p>
+                  <p><strong id="post-<%= post.id%>-comments"><%= link_to post.user.name, user_path(post.user.name),class: "text-dark"%></strong></p>
+
+                  <%= simple_format post.description %>
+                  <p class="text-muted"><%= time_ago_in_words post.created_at%> ago</p>
+                </div>
+
+
+                  <div id="post-div<%=post.id%>">
+                      <%= render 'shared/comment' , post: post %>
+                  </div>
+
+                <div class="comment_form_post comment-box">
+                    <%= form_for Comment.new ,remote: true do |f| %>
+                      <%= f.hidden_field :post_id, value: post.id %>
+                      <%= f.text_field :description, placeholder: "Add comment here.." %>
+                      <%= f.submit "Add" ,class: "btn btn-secondary" %>
+                    <%end%>
+                </div>
+
+
+              </div>
+
+              <% end %>
+</div>
+

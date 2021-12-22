@@ -13,55 +13,7 @@
 <div class="container">
     <div class="row text-align">
       <div class="col-8 ">
-        <% @posts.each do |post|%>
-          <% post.images.each do |image|%>
-            <div class="insta-post">
-              <div class= "post-meta">
-                <% if post.user.avatar.attached?%>
-                  <%= image_tag post.user.avatar, class: 'dp-stats' %>
-                <% end %>
-                <%=post.user.id%>
-                <%= link_to post.user.name, user_path(post.user.id),class: "text-dark" %>
-
-                <%if policy(post).destroy?%>
-                  <%= button_to "Delete", post,:confirm => "are you sure", :method => :delete ,remote: true,class: "text-dark" %>
-                <% end %>
-              </div>
-              <%= image_tag image, class: "img img-fluid" %>
-
-              <div class="post-details">
-                <div class="post-actions">
-                  <i style="cursor: pointer;" class="fa fa-heart  active like-<%= post.id %> <%= 'active' if post_liked_by_user?(post.id) %>fa-2x post-like" data-id="<%=post.id%>"></i>
-                  <%# <i class="fa fa-comment fa-2x text-muted post-comment"></i> %>
-                </div>
-                <p><strong id="post-<%= post.id%>-likes"><%= post.total_likes_count %> Likes</strong></p>
-                <p><strong id="post-<%= post.id%>-comments"><%= link_to post.user.name, user_path(post.user.name),class: "text-dark"%></strong></p>
-
-                <%= simple_format post.description %>
-                <p class="text-muted"><%= time_ago_in_words post.created_at%> ago</p>
-              </div>
-
-
-              <% post.comments.each do |comment|%>
-                <strong><%= comment.user.name%></strong>
-                <%= comment.description%>
-                <% if policy(comment).destroy?%>
-                  <%= link_to "Delete", comment,:confirm => "are you sure", :method => :delete ,remote: true,class: "float-right text-dark" %>
-                <% end %><br>
-
-              <%end%>
-
-              <div class="comment-box">
-                  <%= form_for @comments ,remote: :true do |f| %>
-                    <%= f.hidden_field :post_id, value: post.id %>
-                    <%= f.text_field :description, placeholder: "Add comment here.." %>
-                    <%= f.submit "Add", class: "btn btn-secondary" %>
-                  <%end%>
-              </div>
-
-            </div>
-          <% end %>
-        <%end%>
+        <%= render partial: 'shared/post', collection: @posts %>
       </div>
 
       <div class="col-4">
@@ -72,30 +24,11 @@
         </div>
 
           <div class="follower-suggestions">
-            <%= link_to "View All",class: "float-right text-dark"%>
               <p class="text-muted"><strong>Suggestions for you</strong></p>
-            <%=render partial: "posts/follower_suggestions", locals: { followee: @followee } %>
+            <%=render partial: "posts/follower_suggestions" %>
           </div>
       </div>
 
     </div>
   </div>
 
-
-<%# <script>
-
-$(function(){
- $(".post-like").on("click",function(){
-    // alert("hello")
-    var post_id =$(this).data("id");
-
-    $.ajax({
-      url: "/post/like/"+post_id,
-      method: "Get"
-   }).done(function(response){
-      console.log(response);
-    })
- })
-});
-
-</script> %>

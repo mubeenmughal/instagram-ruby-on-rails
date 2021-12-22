@@ -1,9 +1,5 @@
-class CommentPolicy < ApplicationPolicy
-  def create?
-    @record.user.id == @user.id
-  end
-
-  def destroy?
+class LikePolicy < ApplicationPolicy
+  def save_like?
     @record.user.id == @user.id
   end
 

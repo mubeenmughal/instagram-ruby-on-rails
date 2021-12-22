@@ -10,5 +10,6 @@ class Post < ApplicationRecord
   has_many :likes , dependent: :destroy
   belongs_to :user
 
+  scope :get_user, lambda { |f1_id,f2_id| find_by(follower_id: f1_id,followed_id: f2_id )}
 
 end

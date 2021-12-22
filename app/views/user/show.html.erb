@@ -1,15 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-4">
-
-      <%= image_tag @user.avatar, width: "100px" ,class: "p-stats" %>
+      <%if @user.avatar.attached?%>
+        <%= image_tag @user.avatar, width: "100px" ,class: "p-stats" %>
+      <%end%>
       <%= @user.name %>
 
     </div>
     <div class="col-8 text-left">
       <h1><%= @user.name %></h1>
-      <%# <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-secondary" %>
-
       <div class="row profile-stats">
         <div class="col-4">
           <%= @user.posts.count%> Posts
@@ -18,8 +17,7 @@
         <div class="col-4"><%= @user.total_followers.count%> following</div>
       </div>
     </div>
-    <% if @user.account_type == "public_account" or @user.id == current_user.id %>
-    <%# <%if policy(@user).show? %> %>
+    <% if @user.account_type == "public_account" %>
       <div class="row">
             <% @user.posts.each do |p|%>
 

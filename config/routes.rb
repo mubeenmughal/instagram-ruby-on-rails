@@ -19,8 +19,7 @@ Rails.application.routes.draw do
 
   post "follow/user" => "posts#follow_user", as: :follow_account
   post "follow/user/:id" => "posts#unfollow_user", as: :unfollow_account
-  #get 'user/index'
-  root 'home#index'
+  root 'posts#index'
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

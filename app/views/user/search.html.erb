@@ -3,18 +3,23 @@
   <%= @user[0].name %>
   <%= link_to "Show profile", user_path(@user[0].id),class: "text-dark" %>
 
-        <%if @already_followed%>
+        <%if @user[0].followers.any? { |follower| follower == current_user } %>
 
-                  <%= form_tag unfollow_account_path(@user[0].id), method: :post,remote: true, class: "disabled" do%>
-                    <%= hidden_field_tag :follow_id, @user[0].id %>
-                    <%= submit_tag "Already Followed", class: "btn btn-secondary btn-sm" %>
-                  <% end %>
+                  <%= render partial: 'shared/unfollow' , locals: {data: @user[0]} %>
+
         <%else%>
-                  <%= form_tag follow_account_path, method: :post,remote: true, class: "disabled float-right " do %>
-                    <%= hidden_field_tag :follow_id, @user[0].id%>
-                    <%= submit_tag "Follow", class: "btn btn-info btn-sm"%>
-                  <% end %>
+                  <%= render partial: 'shared/follow' , locals: {data: @user[0]} %>
         <%end%>
 <%else%>
   <p>No User Found</p>
+  <%@user1.each do |data|%>
+    <%= data.name %>
+    <%= link_to "Show profile", user_path(data.id),class: "text-dark" %><br>
+
+        <%if data.followers.any? { |follower| follower == current_user } %>
+                  <%= render partial: 'shared/unfollow' , locals: {data: data} %>
+        <%else%>
+                  <%= render partial: 'shared/follow' , locals: {data: data} %>
+        <%end%>
+  <%end%>
 <%end%>

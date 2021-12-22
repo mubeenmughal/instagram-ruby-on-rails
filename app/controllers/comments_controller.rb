@@ -7,21 +7,28 @@ class CommentsController < ApplicationController
   end
 
   def create
-    # @comment = Comment.new(comment_params)
-    # @comment.user_id = current_user.id if user_signed_in?
     @comment=current_user.comments.build(comment_params)
-    if @comment.save!
-      redirect_to posts_path, flash: {success: "comment was created successfully"}
+    authorize @comment
+    @post = @comment.post
 
+    if @comment.save!
+      respond_to do |format|
+        format.js
+      end
     else
-      redirect_to posts_path, flash: {danger: "comment was not saved"}
+      redirect_to posts_path, flash: {danger: @comment.errors }
     end
   end
 
   def destroy
     authorize @comment
-    @comment.destroy
-    redirect_to posts_path, flash: {success: "comment was deleted successfully"}
+    if @comment.destroy
+      respond_to do |format|
+        format.js
+      end
+    else
+      redirect_to posts_path, flash: {danger: @comment.errors.messages}#, notice: @comment.errors
+    end
   end
 
   private

@@ -3,24 +3,18 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   skip_before_action :verify_authenticity_token
-  # before_action :check_permission, only: [:destroy]
+  before_action :get_post, only: [:destroy]
 
   def index
-    @comments = Comment.new
-    # following_ids = Follow.where(follower_id: current_user.id).pluck(:followed_id) << current_user.id
+    @comment = Comment.new
     following_ids = Follow.find_following_ids(current_user.id)
-    @follower_suggestions = User.where.not(id: following_ids)
-    # @follower_suggestions = User.all
+    @follower_suggestions = User.where.not(id: current_user.id)
     @posts = Post.where(user_id: following_ids)
-
   end
 
   def new
     @post = current_user.posts.new
     @comment = Comment.new
-  end
-
-  def edit
   end
 
   def create
@@ -37,40 +31,35 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    @post = Post.find(params[:id])
     authorize @post
     @post.destroy
-    redirect_to posts_path, flash: {success: "post was deleted successfully"}
+    redirect_to posts_path, flash: {success: "Post was deleted successfully"}
   end
 
   def follow_user
-    user_id = params[:follow_id]
-    if Follow.create(follower_id: current_user.id,followed_id: user_id)
-
-    @followee = true
-    flash[:success] = "following user"
+    if Follow.create(follower_id: current_user.id,followed_id: params[:follow_id])
+        redirect_to posts_path, flash: {success: "You are now following that User"}
     else
-      flash[:danger] = "unable to following user"
+      redirect_to posts_path, flash: {danger: "Unable to following"}
     end
-    redirect_to posts_path
   end
 
   def unfollow_user
     @unfollow = Follow.find_by(follower_id: current_user.id,followed_id: params[:id])
     if @unfollow.destroy
-      @followee = false
-      flash[:success] = "unfollowing user"
+      redirect_to posts_path, flash: {info: "Unfollowing that User"}
+    else
+      redirect_to posts_path, flash: {danger: @unfollow.errors }
     end
-    redirect_to posts_path
   end
 
   private
 
   def post_params
-
-    params.require(:post).permit(:description, :post_id,:like_id,:comment_id,:images).tap do |permitted_params|
-    permitted_params[:user_id] = current_user.id
-    end
+    params.require(:post).permit(:description, :post_id,:like_id,:comment_id,:images)
   end
 
+  def get_post
+    @post = Post.find(params[:id])
+  end
 end

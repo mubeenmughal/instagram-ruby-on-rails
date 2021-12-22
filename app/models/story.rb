@@ -7,4 +7,11 @@ class Story < ApplicationRecord
 
   # belongs_to :user, optional: true
   belongs_to :user
+  after_save :remove_story
+
+
+  private
+    def remove_story
+      RemoveStoryJob.set(wait: 5.seconds).perform_later(self)
+    end
 end

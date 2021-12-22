@@ -1,11 +1,11 @@
 class UserPolicy < ApplicationPolicy
 
   def edit?
-    @record.user.id == @user.id
+    @record.id == !@user.id
   end
 
   def show?
-    @record.account_type = "private_account" || @record.id = @user.id
+    @record.public_account? || @record.private_account?
   end
 
   class Scope < Scope

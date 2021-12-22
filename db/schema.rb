@@ -99,4 +99,7 @@ ActiveRecord::Schema.define(version: 2021_12_13_084608) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "likes", "posts"
+  add_foreign_key "likes", "users"
+  add_foreign_key "stories", "users"
 end
