@@ -1,11 +1,13 @@
-# frozen_string_literal: true
+class StoryPolicy < ApplicationPolicy
+  def destroy?
+    @record.user.id == @user.id
+  end
 
-class LikePolicy < ApplicationPolicy
   def create?
     @record.user.id == @user.id
   end
 
-  def destroy?
+  def show?
     @record.user.id == @user.id
   end
 

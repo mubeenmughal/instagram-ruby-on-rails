@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
     @comment = current_user.comments.build(comment_params)
     authorize @comment
     @post = @comment.post
-
+    
     if @comment.save!
       respond_to do |format|
         format.js

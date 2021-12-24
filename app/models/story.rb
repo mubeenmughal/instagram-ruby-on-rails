@@ -12,7 +12,6 @@ class Story < ApplicationRecord
   after_save :remove_story
 
   private
-
   def remove_story
     RemoveStoryJob.set(wait: 10.minutes).perform_later(self)
   end

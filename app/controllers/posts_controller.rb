@@ -3,6 +3,7 @@
 class PostsController < ApplicationController
   before_action :authenticate_user!
   before_action :get_post, only: %i[destroy show]
+  before_action :check_permission, only: %i[destory show]
   include PostsHelper
 
   def index
@@ -23,12 +24,9 @@ class PostsController < ApplicationController
     save_helper(@post)
   end
 
-  def show
-    authorize @post
-  end
+  def show;  end
 
   def destroy
-    authorize @post
     destroy_helper(@post)
   end
 
@@ -40,5 +38,9 @@ class PostsController < ApplicationController
 
   def get_post
     @post = Post.find(params[:id])
+  end
+
+  def check_permission
+    authorize @post
   end
 end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class FollowsController < ApplicationController
+  before_action :authenticate_user!
   def create
     @follow = Follow.create(follower_id: current_user.id, followed_id: follow_params[:followed_id])
     if @follow
@@ -20,7 +21,6 @@ class FollowsController < ApplicationController
   end
 
   private
-
   def follow_params
     params.require(:follow).permit(:followed_id)
   end
