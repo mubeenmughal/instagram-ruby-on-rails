@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
 class Follow < ApplicationRecord
-   belongs_to :follower, class_name: 'User'
+  belongs_to :follower, class_name: 'User'
 
+  validates :follower_id, uniqueness: { scope: :followed_id }
 
-  validates_uniqueness_of :follower_id, scope: :followed_id
-
-  scope :find_following_ids, lambda { |u_id| where(follower_id: u_id).pluck(:followed_id) << u_id}
+  scope :find_following_ids, ->(u_id) { where(follower_id: u_id).pluck(:followed_id) << u_id }
 end

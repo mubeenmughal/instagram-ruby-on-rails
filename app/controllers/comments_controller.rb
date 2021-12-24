@@ -1,13 +1,10 @@
+# frozen_string_literal: true
+
 class CommentsController < ApplicationController
-  skip_before_action :verify_authenticity_token
   before_action :find_comment, only: [:destroy]
 
-  def index
-    @comments =Comment.all
-  end
-
   def create
-    @comment=current_user.comments.build(comment_params)
+    @comment = current_user.comments.build(comment_params)
     authorize @comment
     @post = @comment.post
 
@@ -16,7 +13,7 @@ class CommentsController < ApplicationController
         format.js
       end
     else
-      redirect_to posts_path, flash: {danger: @comment.errors }
+      format.js { render 'create', locals: { error: @comment.errors.full_messages.to_sentence } }
     end
   end
 
@@ -27,13 +24,14 @@ class CommentsController < ApplicationController
         format.js
       end
     else
-      redirect_to posts_path, flash: {danger: @comment.errors.messages}#, notice: @comment.errors
+      format.js { render 'destroy', locals: { error: @comment.errors.full_messages.to_sentence } }
     end
   end
 
   private
+
   def comment_params
-    params.require(:comment).permit(:description,:post_id)
+    params.require(:comment).permit(:description, :post_id)
   end
 
   def find_comment

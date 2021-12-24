@@ -8,8 +8,7 @@ ruby '2.7.2'
 gem 'bootstrap'
 gem 'bootstrap_form', '~> 4.0'
 gem 'bootstrap-sass', '3.3.6'
-gem "font-awesome-rails"
-
+gem 'font-awesome-rails'
 
 gem 'jquery-rails'
 
@@ -26,7 +25,7 @@ gem 'uglifier', '>= 1.3.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'mini_racer', platforms: :ruby
 
-gem "pundit"
+gem 'pundit'
 
 gem 'table_print'
 # Use CoffeeScript for .coffee assets and views
@@ -79,3 +78,8 @@ group :test do
 end
 
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
+
+gem 'activestorage-validator'
+
+gem 'cloudinary'
+gem 'figaro'

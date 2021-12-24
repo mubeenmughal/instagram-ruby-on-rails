@@ -2,19 +2,22 @@
 
 class UserController < ApplicationController
   before_action :authenticate_user!
+  before_action :check_permission, only: %i[show edit]
 
   def edit
     @user.avatar.attach(params[:avatar])
-    authorize @user
   end
 
   def show
     @user = User.find(params[:id])
-    authorize @user
   end
 
   def search
-    @user = User.where("name LIKE ?", "%" +params[:q] + "%")
+    @user = User.where('name LIKE ?', "%#{params[:q]}%")
     @user1 = User.where.not(id: current_user.id)
+  end
+
+  def check_permission
+    authorize User
   end
 end

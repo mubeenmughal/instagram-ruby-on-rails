@@ -1,0 +1,25 @@
+<% @follower_suggestions.each do |user|%>
+  <div class="recommended-follower">
+    <div class ="row">
+        <div class="col-lg-2">
+          <%= image_tag(url_for(user.avatar), class: "dp-stats") if user.avatar.attached? %>
+        </div>
+        <div class="col-lg-10">
+          <%if user.followers.any? { |follower| follower == current_user } %>
+            <%= form_for Follow.new, url: follow_path(user.id), remote: true, method: :delete do |f|%>
+              <%= f.hidden_field :followed_id, value: user.id %>
+              <%= f.submit "Unfollow", class: "btn btn-danger btn-sm" %>
+            <% end %>
+          <%else%>
+            <%= form_for Follow.new, url: follows_path,remote: true, method: :post do |f| %>
+              <%= f.hidden_field :followed_id, value: user.id %>
+              <%= f.submit "Follow", class: "btn btn-info btn-sm"%>
+            <% end %>
+          <%end%>
+
+          <%= link_to user.name, user_path(user.id),class: "text-dark" %>
+          <p class="text-muted"><%= user.created_at > 10.days.ago ? "New to instagram": "followed by X user"%></p>
+        </div>
+    </div>
+  </div>
+<% end %>

@@ -9,6 +9,6 @@ ActionMailer::Base.smtp_settings = {
   authentication: 'plain',
   enable_starttls_auto: true
 }
-    # => "123"
+# => "123"
 # => "345"
 Rails.application.credentials.secret_key_base

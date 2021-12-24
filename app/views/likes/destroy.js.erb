@@ -1,0 +1,2 @@
+$('#like-<%= @unlike.post_id %>').html('<%= button_to 'like' ,likes_path(post_id: @unlike.post.id),remote: true%>');
+$('#counter-<%= @unlike.post_id %>').html('<p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>');

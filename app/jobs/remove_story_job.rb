@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class RemoveStoryJob < ApplicationJob
   queue_as :default
 

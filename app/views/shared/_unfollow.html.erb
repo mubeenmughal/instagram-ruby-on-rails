@@ -1,6 +1,5 @@
-
-<%= form_tag unfollow_account_path(data.id), method: :post,remote: true, class: "disabled" do%>
-  <%= hidden_field_tag :follow_id, data.id %>
-  <%= submit_tag "Unfollow", class: "btn btn-danger btn-sm" %>
-
-<% end %>
+<%= form_for Follow.new, url: follow_path(data.id), method: :delete do |f|%>
+              <%= f.hidden_field :followed_id, value: data.id %>
+              <%= f.submit "Unfollow", class: "btn btn-danger btn-sm" %>
+            <% end %>
+            

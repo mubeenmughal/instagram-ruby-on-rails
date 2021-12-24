@@ -1,15 +1,10 @@
-class Comment < ApplicationRecord
-  # has_many_attached :avatar
+# frozen_string_literal: true
 
+class Comment < ApplicationRecord
   belongs_to :user
   belongs_to :post
 
-  validates :description, length: { maximum: 1000,
-    too_long: "%{count} characters is the maximum allowed" }
-
-  #  validates_presence_of :Comment
-  #  validates_presence_of :user_id
-   validates_presence_of :post_id
-
-
+  validates :description, presence: true, length: { maximum: 100,
+                                                    too_long: '%{count} characters is the maximum allowed' }
+  validates :post_id, presence: true
 end

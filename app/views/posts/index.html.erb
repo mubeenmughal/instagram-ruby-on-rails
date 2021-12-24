@@ -4,31 +4,30 @@
       <%= current_user.story&.description%>
       <% if current_user.story.present? %>
         <%= link_to "Delete", story_path(current_user.story.id), confirm: "are you sure", method: :delete, class: "text-dark" %>
-        <%= image_tag current_user.story&.images.first, class: "img img-fluid"%>
+        <%= image_tag current_user.story&.images.last, class: "img img-fluid"%>
       <% end %>
     </div>
   </div>
 </div>
 
 <div class="container">
-    <div class="row text-align">
-      <div class="col-8 ">
-        <%= render partial: 'shared/post', collection: @posts %>
+  <div class="row text-align">
+    <div class="col-8 ">
+      <%= render partial: 'shared/post', collection: @posts %>
+    </div>
+
+    <div class="col-4">
+      <div class="user-summary ">
+        <p>
+          <strong><%= current_user.name %>
+        </p>
       </div>
 
-      <div class="col-4">
-        <div class="user-summary ">
-          <p>
-            <strong><%= current_user.name %>
-          </p>
+        <div class="follower-suggestions">
+          <p class="text-muted"><strong>Suggestions for you</strong></p>
+          <%=render partial: "shared/follower_suggestions" %>
         </div>
-
-          <div class="follower-suggestions">
-              <p class="text-muted"><strong>Suggestions for you</strong></p>
-            <%=render partial: "posts/follower_suggestions" %>
-          </div>
-      </div>
-
     </div>
   </div>
+</div>
 

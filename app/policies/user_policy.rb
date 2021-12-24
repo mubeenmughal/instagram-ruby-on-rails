@@ -1,11 +1,12 @@
-class UserPolicy < ApplicationPolicy
+# frozen_string_literal: true
 
+class UserPolicy < ApplicationPolicy
   def edit?
-    @record.id == !@user.id
+    @record.id == @user.id
   end
 
   def show?
-    @record.public_account? || @record.private_account?
+    @record.public_account || @record.private_account
   end
 
   class Scope < Scope
@@ -13,6 +14,4 @@ class UserPolicy < ApplicationPolicy
       scope.all
     end
   end
-
-
 end

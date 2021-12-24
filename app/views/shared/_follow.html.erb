@@ -1,4 +1,4 @@
-<%= form_tag follow_account_path, method: :post,remote: true, class: "disabled float-right " do %>
-                    <%= hidden_field_tag :follow_id, data.id%>
-                    <%= submit_tag "Follow", class: "btn btn-info btn-sm"%>
-                  <% end %>
+<%= form_for Follow.new, url: follows_path, method: :post do |f| %>
+              <%= f.hidden_field :followed_id, value: data.id %>
+              <%= f.submit "Follow", class: "btn btn-info btn-sm"%>
+            <% end %>

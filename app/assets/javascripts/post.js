@@ -2,17 +2,17 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
-    $(function(){
-        $(".post-like").on("click",function(){
-           var post_id =$(this).data("id");
+   //  $(function(){
+   //      $(".post-like").on("click",function(){
+   //         var post_id =$(this).data("id");
 
-           $.ajax({
-             url: "/post/like/"+post_id,
-             method: "Get"
-          }).done(function(response){
-             console.log(response);
-           })
-        })
-       });
+   //         $.ajax({
+   //           url: "/post/like/"+post_id,
+   //           method: "Post"
+   //        }).done(function(response){
+   //           console.log(response);
+   //         })
+   //      })
+   //     });
 
 
