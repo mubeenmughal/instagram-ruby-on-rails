@@ -104,6 +104,6 @@ Rails.application.configure do
     password:             ENV['password'],
     authentication:       'plain',
     enable_starttls_auto: true }
-  config.action_mailer.default_url_options = { host: 'mubeen-insta.herokuapp.com', protocol: 'https' }
+  config.action_mailer.default_url_options = { host: 'mubeen-insta.herokuapp.com' }
 
 end
