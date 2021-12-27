@@ -7,7 +7,7 @@ module PostsHelper
 
   def save_helper(post)
     if post.save
-      redirect_to @post, flash: { success: 'post was created successfully' }
+      redirect_to post_path(post.id), flash: { success: 'post was created successfully' }
     else
       render new_post_path, flash: { danger: post.errors }
     end
@@ -15,7 +15,7 @@ module PostsHelper
 
   def destroy_helper(post)
     if post.destroy
-      redirect_to @post, flash: { success: 'Post was deleted successfully' }
+      redirect_to post_path(post.id), flash: { success: 'Post was deleted successfully' }
     else
       render new_post_path, flash: { danger: post.errors }
     end

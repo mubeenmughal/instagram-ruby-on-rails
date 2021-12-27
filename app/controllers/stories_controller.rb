@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class StoriesController < ApplicationController
-  before_action :get_story, only: [:destroy]
+  before_action :check_story, only: [:destroy]
   before_action :check_permission, only: %i[destory show]
   include StoriesHelper
 
@@ -29,7 +29,7 @@ class StoriesController < ApplicationController
     params.require(:story).permit(:description, :images)
   end
 
-  def get_story
+  def check_story
     @story = Story.find(params[:id])
   end
 

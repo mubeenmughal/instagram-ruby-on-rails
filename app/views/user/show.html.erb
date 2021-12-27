@@ -9,7 +9,7 @@
     </div>
     <div class="col-8 text-left">
       <h1><%= @user.name %></h1>
-      <% if @user.id==current_user.id %>
+      <% if @user.id == current_user.id %>
       <%= link_to "Edit profile", edit_user_registration_path, class: "btn btn-secondary" %>
       <%end%>
       <div class="row profile-stats">
@@ -23,14 +23,13 @@
     <% if @user.account_type == "public_account" %>
       <div class="row">
             <% @user.posts.each do |p|%>
-
-                <div class="col-4">
-                  <% p.images.each do |image| %>
-                      <div class="insta-post">
-                        <%= image_tag image, class: "img img-fluid" %>
-                      </div>
-                    <%end%>
-                </div>
+              <div class="col-4">
+                <% p.images.each do |image| %>
+                    <div class="insta-post">
+                      <%= image_tag image, class: "img img-fluid" %>
+                    </div>
+                  <%end%>
+              </div>
           <% end %>
       </div>
      <%end%>

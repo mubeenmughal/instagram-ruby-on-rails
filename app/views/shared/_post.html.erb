@@ -5,14 +5,11 @@
         <% if post.user.avatar.attached?%>
           <%= image_tag post.user.avatar, class: 'dp-stats' %>
         <% end %>
-        <%=post.user.id%>
         <%= link_to post.user.name, user_path(post.user.id),class: "text-dark" %>
-
         <%if policy(post).destroy? %>
           <%= button_to "Delete", post,:confirm => "are you sure", :method => :delete ,remote: true,class: "text-dark" %>
         <% end %>
       </div>
-
         <%= image_tag image, class: "img img-fluid" %>
       <div class="post-details">
         <div id="like-<%= post.id %>">
@@ -21,21 +18,15 @@
           <% else %>
             <%= button_to 'unlike' ,like_path(post.id),remote: true,method: :delete%>
           <% end %>
-
         </div>
-
         <div id="counter-<%= post.id%>"> <p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p></div>
         <p><strong id="post-<%= post.id%>-comments"><%= link_to post.user.name, user_path(post.user.id),class: "text-dark"%></strong></p>
-
         <%= simple_format post.description %>
         <p class="text-muted"><%= time_ago_in_words post.created_at%> ago</p>
       </div>
-
-
       <div id="post-div<%=post.id%>">
         <%= render 'shared/comment' , post: post %>
       </div>
-
       <div class="comment_form_post comment-box">
         <%= form_for Comment.new ,remote: true do |f| %>
           <%= f.hidden_field :post_id, value: post.id %>

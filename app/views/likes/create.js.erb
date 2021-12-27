@@ -1,3 +1,2 @@
-console.log('hello')
 $('#like-<%= @like.post_id %>').html('<%= button_to 'unlike' ,like_path(post.id),remote: true,method: :delete%>');
 $('#counter-<%= @like.post_id %>').html('<p><%= post.likes.count %> <%= (post.likes.count) == 1 ? 'Like' : 'Likes'%></p>');

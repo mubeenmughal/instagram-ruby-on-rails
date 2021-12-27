@@ -2,7 +2,7 @@
 
 class PostsController < ApplicationController
   before_action :authenticate_user!
-  before_action :get_post, only: %i[destroy show]
+  before_action :check_post, only: %i[destroy show]
   before_action :check_permission, only: %i[destory show]
   include PostsHelper
 
@@ -24,7 +24,7 @@ class PostsController < ApplicationController
     save_helper(@post)
   end
 
-  def show;  end
+  def show; end
 
   def destroy
     destroy_helper(@post)
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
     params.require(:post).permit(:description, :images)
   end
 
-  def get_post
+  def check_post
     @post = Post.find(params[:id])
   end
 

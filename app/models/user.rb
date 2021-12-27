@@ -12,7 +12,7 @@ class User < ApplicationRecord
   has_one :story, dependent: :destroy
   has_one_attached :avatar
 
-  has_many :received_follows, foreign_key: :followed_id, class_name: 'Follow'
+  has_many :received_follows, dependent: :destroy, foreign_key: :followed_id, class_name: 'Follow'
   has_many :followers, through: :received_follows, source: :follower
 
   validates :name, presence: true, length: { minimum: 5 }

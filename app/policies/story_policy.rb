@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class StoryPolicy < ApplicationPolicy
   def destroy?
     @record.user.id == @user.id
