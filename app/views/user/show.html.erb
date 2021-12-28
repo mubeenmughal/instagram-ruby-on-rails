@@ -20,7 +20,7 @@
         <div class="col-4"><%= @user.total_followers.count%> following</div>
       </div>
     </div>
-    <% if @user.account_type == "public_account" %>
+    <% if @user.account_type == "public_account" || @user.id == current_user.id %>
       <div class="row">
             <% @user.posts.each do |p|%>
               <div class="col-4">

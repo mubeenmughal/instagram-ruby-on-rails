@@ -14,6 +14,6 @@ class Story < ApplicationRecord
   private
 
   def remove_story
-    RemoveStoryJob.set(wait: 30.seconds).perform_later(self)
+    RemoveStoryJob.set(wait: 100.seconds).perform_later(self)
   end
 end

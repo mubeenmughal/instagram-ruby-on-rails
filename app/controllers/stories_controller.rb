@@ -2,14 +2,17 @@
 
 class StoriesController < ApplicationController
   before_action :check_story, only: [:destroy]
-  before_action :check_permission, only: %i[destory show]
-  include StoriesHelper
+  before_action :check_permission, only: %i[destroy show]
 
   def create
     @story = Story.new(post_params)
     @story.user = current_user
     authorize @story
-    save_helper(@story)
+    if @story.save
+      redirect_to posts_path, flash: { success: 'story was created successfully' }
+    else
+      render posts_path, flash: { danger: @story.errors }
+    end
   end
 
   def new
@@ -20,7 +23,11 @@ class StoriesController < ApplicationController
   def show; end
 
   def destroy
-    destroy_helper(@story)
+    if @story.destroy
+      redirect_to posts_path, flash: { success: 'story was deleted successfully' }
+    else
+      render posts_path, flash: { danger: @story.errors }
+    end
   end
 
   private

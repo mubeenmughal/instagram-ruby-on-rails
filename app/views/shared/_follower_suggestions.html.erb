@@ -5,7 +5,7 @@
           <%= image_tag(url_for(user.avatar), class: "dp-stats") if user.avatar.attached? %>
         </div>
         <div class="col-lg-10">
-          <%if user.followers.any? { |follower| follower == current_user } %>
+          <%if followers(user) %>
             <%= form_for Follow.new, url: follow_path(user.id), remote: true, method: :delete do |f|%>
               <%= f.hidden_field :followed_id, value: user.id %>
               <%= f.submit "Unfollow", class: "btn btn-danger btn-sm" %>

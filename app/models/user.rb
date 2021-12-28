@@ -10,10 +10,9 @@ class User < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_one :story, dependent: :destroy
-  has_one_attached :avatar
-
-  has_many :received_follows, dependent: :destroy, foreign_key: :followed_id, class_name: 'Follow'
+  has_many :received_follows, dependent: :destroy, inverse_of: :followers, foreign_key: :followed_id, class_name: 'Follow'
   has_many :followers, through: :received_follows, source: :follower
+  has_one_attached :avatar
 
   validates :name, presence: true, length: { minimum: 5 }
   validates :email, presence: true

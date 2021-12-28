@@ -9,7 +9,7 @@ class CommentsController < ApplicationController
     @post = @comment.post
     authorize @comment
     respond_to do |format|
-      if @comment.save!
+      if @comment.save
         format.js
       else
         format.js { render 'create', locals: { error: @comment.errors.full_messages.to_sentence } }

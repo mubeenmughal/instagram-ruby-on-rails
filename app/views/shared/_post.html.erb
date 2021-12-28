@@ -13,7 +13,7 @@
         <%= image_tag image, class: "img img-fluid" %>
       <div class="post-details">
         <div id="like-<%= post.id %>">
-          <% if Like.find_by(post_id: post.id,user_id: current_user).nil? %>
+          <% if search_like(post) %>
             <%= button_to 'like' ,likes_path(post_id: post.id),remote: true%>
           <% else %>
             <%= button_to 'unlike' ,like_path(post.id),remote: true,method: :delete%>

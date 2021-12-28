@@ -2,8 +2,10 @@
 
 class FollowsController < ApplicationController
   before_action :authenticate_user!
+
   def create
     @follow = Follow.create(follower_id: current_user.id, followed_id: follow_params[:followed_id])
+    authorize @follow
     if @follow
       redirect_to posts_path, flash: { success: 'You are now following that User' }
     else
@@ -13,6 +15,7 @@ class FollowsController < ApplicationController
 
   def destroy
     @unfollow = Follow.find_by(follower_id: current_user.id, followed_id: follow_params[:followed_id])
+    authorize @unfollow
     if @unfollow.destroy
       redirect_to posts_path, flash: { info: 'Unfollowing that User' }
     else
